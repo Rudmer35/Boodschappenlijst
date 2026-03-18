@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "959657995428",
+    "project_id": "boodschappen-6f108",
+    "storage_bucket": "boodschappen-6f108.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959657995428:android:bdca2b7a5e97ca9cf14a31",
+        "android_client_info": {
+          "package_name": "com.rudmer.boodschappen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVvoJFdjegxjMafHb27dmgpJAVasG9Qqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
