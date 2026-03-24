@@ -1,4 +1,4 @@
-import 'package:boodschappen/screens/home/home.dart';
+import 'package:boodschappen/screens/authenticate/authenticate.dart';
 import 'package:flutter/material.dart';
 
 class wrapper extends StatelessWidget {
@@ -8,6 +8,6 @@ class wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
 
     // return home or authenticate
-    return Home();
+    return authenicate();
   }
 }
