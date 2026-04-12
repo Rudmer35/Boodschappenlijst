@@ -1,5 +1,7 @@
 import 'package:boodschappen/services/auth.dart';
+import 'package:boodschappen/shared/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:boodschappen/shared/constant.dart';
 
 class Register extends StatefulWidget {
   final Function? toggleView;
@@ -13,6 +15,7 @@ class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   // text field state
 
@@ -22,7 +25,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading(): Scaffold(
       backgroundColor: Colors.green[50],
       appBar: AppBar(
         backgroundColor: Colors.green[200],
@@ -50,6 +53,7 @@ class _RegisterState extends State<Register> {
             children: <Widget>[
                SizedBox(height: 20.0,),
                TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'Email'),
                 validator: (val) => (val == null || val.isEmpty) ? 'Enter an email' : null,
                 onChanged: (val) {
                   setState(() => email = val);
@@ -57,6 +61,7 @@ class _RegisterState extends State<Register> {
                ),
                SizedBox(height: 20.0,),
                TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'Password'),
                 validator: (val) => (val == null || val.length < 6) ? 'Password not compatible' : null,
                 obscureText: true,
                 onChanged: (val) {
@@ -70,9 +75,12 @@ class _RegisterState extends State<Register> {
                 ),
                 onPressed:() async {
                   if (_formKey.currentState?.validate() ?? false){
+                    setState(() => loading = true);
                     dynamic result = await _auth.registerWithEmailAndPassword(email, password);
                     if (result == null){
-                      setState(() => error = 'pleas supply valid information');
+                      setState(() { 
+                        loading = false;
+                        error = 'pleas supply valid information';});
                     }
                   }
                 }, 

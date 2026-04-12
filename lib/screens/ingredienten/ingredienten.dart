@@ -1,10 +1,9 @@
-import 'package:boodschappen/screens/ingredienten/ingredienten.dart';
-import 'package:boodschappen/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:boodschappen/services/auth.dart';
 
 
-class Home extends StatelessWidget {
-   Home({super.key});
+class Ingredienten extends StatelessWidget {
+  Ingredienten({super.key});
 
   final AuthService _auth = AuthService();
 
@@ -15,7 +14,7 @@ class Home extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.green[200],
           elevation: 0.0,
-          title: Text('Menu'),
+          title: Text('Ingredienten'),
           centerTitle: true,
           actions: <Widget>[
             TextButton.icon(
@@ -30,15 +29,8 @@ class Home extends StatelessWidget {
             )
           ],
         ), 
-        body: Center(
-          child: ElevatedButton(onPressed: (){          
-            Navigator.push(context,
-          MaterialPageRoute (builder: (context) => Ingredienten(),
-          )); },
-           child: Text('Ingredienten')
-           ),
-        ),
-          );
-   
-  }
-} 
+        
+           );
+        
+}
+}

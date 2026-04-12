@@ -1,4 +1,5 @@
 import 'package:boodschappen/models/user.dart';
+import 'package:boodschappen/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -8,7 +9,7 @@ class AuthService {
 // create user object based on data from firebaseuser
 
 CustomUser? _fromFirebaseUser(User? user){
-  return user != null ? CustomUser(uid: user.uid) : null;
+  return user != null ? CustomUser(uid: user.uid, email: user.email) : null;
 }
 
 //authentication change user stream
@@ -37,6 +38,8 @@ Stream<CustomUser?> get user {
   try{
     UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
     User? user = result.user;
+
+  
     return _fromFirebaseUser(user);
   }catch(e){
     print(e.toString());
@@ -51,6 +54,12 @@ Future registerWithEmailAndPassword(String email, String password) async {
   try{
     UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
     User? user = result.user;
+
+    // Create new document for the user with uid
+    if (user != null) {
+    await DatabaseService(uid: user.uid).updateUserDate('Nieuwe Gebruiker', user.email ?? '');
+    }
+
     return _fromFirebaseUser(user);
   }catch(e){
     print(e.toString());
