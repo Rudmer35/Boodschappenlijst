@@ -24,7 +24,11 @@ class Ingredienten extends StatelessWidget {
               icon: Icon(Icons.person),
               label: Text('Logout'),
               onPressed: () async {
+                
                 await _auth.signingOut();
+
+                if (!context.mounted) return;
+
                 Navigator.pushNamedAndRemoveUntil(
                 context,
                 '/',
@@ -37,5 +41,5 @@ class Ingredienten extends StatelessWidget {
         
            );
         
-}
+  }
 }
