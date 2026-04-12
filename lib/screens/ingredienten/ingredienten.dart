@@ -25,6 +25,11 @@ class Ingredienten extends StatelessWidget {
               label: Text('Logout'),
               onPressed: () async {
                 await _auth.signingOut();
+                Navigator.pushNamedAndRemoveUntil(
+                context,
+                '/',
+                (route) => false,
+                );
               } ,
             )
           ],

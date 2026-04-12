@@ -1,5 +1,6 @@
 import 'package:boodschappen/screens/ingredienten/ingredienten.dart';
 import 'package:boodschappen/services/auth.dart';
+import 'package:boodschappen/services/routes.dart';
 import 'package:flutter/material.dart';
 
 
@@ -32,9 +33,7 @@ class Home extends StatelessWidget {
         ), 
         body: Center(
           child: ElevatedButton(onPressed: (){          
-            Navigator.push(context,
-          MaterialPageRoute (builder: (context) => Ingredienten(),
-          )); },
+            Navigator.pushNamed(context, Approutes.ingredienten); },
            child: Text('Ingredienten')
            ),
         ),

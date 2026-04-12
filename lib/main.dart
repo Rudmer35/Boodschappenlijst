@@ -1,4 +1,5 @@
 import 'package:boodschappen/models/user.dart';
+import 'package:boodschappen/screens/ingredienten/ingredienten.dart';
 import 'package:boodschappen/screens/wrapper.dart';
 import 'package:boodschappen/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,10 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
         child: MaterialApp(
-        home: wrapper(),      
+        routes: {
+        '/': (context) => Wrapper(),
+        '/ingredienten': (context) => Ingredienten()
+      },     
       ),
     );
   }
