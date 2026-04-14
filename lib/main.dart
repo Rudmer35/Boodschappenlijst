@@ -1,10 +1,10 @@
 import 'package:boodschappen/models/user.dart';
-import 'package:boodschappen/screens/ingredienten/ingredienten.dart';
 import 'package:boodschappen/screens/wrapper.dart';
 import 'package:boodschappen/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:boodschappen/services/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,9 +22,12 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
         child: MaterialApp(
+          theme: ThemeData(
+            useMaterial3: true,
+          ),
         routes: {
-        '/': (context) => Wrapper(),
-        '/ingredienten': (context) => Ingredienten()
+        Approutes.wrapper: (context) => Wrapper(),
+       
       },     
       ),
     );
