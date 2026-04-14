@@ -1,4 +1,3 @@
-import 'package:boodschappen/screens/ingredienten/ingredienten.dart';
 import 'package:boodschappen/services/auth.dart';
 import 'package:boodschappen/services/routes.dart';
 import 'package:flutter/material.dart';
