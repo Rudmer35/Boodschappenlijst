@@ -6,10 +6,10 @@ class DatabaseService {
   DatabaseService({this.uid});
 
   // Colletion reference
-  final CollectionReference Userdata = FirebaseFirestore.instance.collection('Gebruikers');
+  final CollectionReference userData = FirebaseFirestore.instance.collection('Gebruikers');
 
   Future updateUserDate (String naam, String email) async {
-    return await Userdata.doc(uid).set({
+    return await userData.doc(uid).set({
       'naam': naam,
       'email': email,
     });
@@ -19,7 +19,18 @@ class DatabaseService {
   // get User stream
 
   Stream<QuerySnapshot> get users {
-    return Userdata.snapshots();
+    return userData.snapshots();
+  }
+
+  Future addIngredient (String naam, String unit) async {
+    return await userData
+      .doc(uid)
+      .collection('ingredienten')
+      .add({
+        'naam': naam,
+        'eenheid': unit,
+        'aangemaaktOp': Timestamp.now(),      
+      });
   }
 
   
