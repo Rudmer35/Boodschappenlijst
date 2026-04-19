@@ -1,6 +1,7 @@
 import 'package:boodschappen/models/user.dart';
 import 'package:boodschappen/screens/wrapper.dart';
 import 'package:boodschappen/services/auth.dart';
+import 'package:boodschappen/services/ingredienten_data.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -18,9 +19,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<CustomUser?>.value(
+    return MultiProvider(
+      providers: [StreamProvider<CustomUser?>.value(
       value: AuthService().user,
-      initialData: null,
+      initialData: null,),
+      ProxyProvider<CustomUser?, IngredientenData?>(
+        update: (_, user, _){
+        if (user == null) return null;
+        return IngredientenData(uid: user.uid!);
+      })
+      ],    
         child: MaterialApp(
           theme: ThemeData(
             useMaterial3: true,

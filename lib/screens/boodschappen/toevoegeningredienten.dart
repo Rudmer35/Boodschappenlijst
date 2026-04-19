@@ -1,10 +1,10 @@
 import 'package:boodschappen/models/eenheden.dart';
 import 'package:flutter/material.dart';
-import 'package:boodschappen/services/database.dart';
+import 'package:boodschappen/services/ingredienten_data.dart';
 
 Future<void> showAddIngredientDialog(
   BuildContext context,
-  DatabaseService db,
+  IngredientenData db,
 ) async {
   final TextEditingController naamController = TextEditingController();
   String? geselecteerdeEenheid;

@@ -1,31 +1,38 @@
+import 'package:boodschappen/services/add_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:boodschappen/services/database.dart';
-import 'package:boodschappen/models/user.dart';
+import 'package:boodschappen/services/keuze_ingredients.dart';
 import 'package:provider/provider.dart';
-import 'package:boodschappen/screens/boodschappen/toevoegeningredienten.dart';
+import 'package:boodschappen/services/ingredienten_data.dart';
 
-class Boodschappenlijst extends StatelessWidget {
-     Boodschappenlijst({super.key});
-
-  
+class Boodschappenlijst extends StatefulWidget {
+  const Boodschappenlijst({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final user = Provider.of<CustomUser?>(context);
-
-    if(user == null){
-      return const Center(
-        child: Text('Geen gebruiker ingelogd'),
-      );
-    }
-
-    final db = DatabaseService(uid: user.uid);
-
-    return FloatingActionButton(
-  onPressed: () {
-    showAddIngredientDialog(context, db);
-  },
-  child: const Icon(Icons.add),
-);
-  }
+  State<Boodschappenlijst> createState() => _BoodschappenlijstState();
 }
+
+class _BoodschappenlijstState extends State<Boodschappenlijst> {
+  @override
+  Widget build(BuildContext context) {
+
+    final db = Provider.of<IngredientenData>(context);
+
+    return ListView(
+      children: [
+        AddTile(onTap: ()=> openIngredienten(db),)
+      ],
+    );
+  }
+
+  void openIngredienten (IngredientenData db) {
+    KeuzeIngredients.show(
+      context: context,
+      db:db,
+      onSelected: (ingredient){
+        print(ingredient['naam']);
+        print (ingredient['eenheid']);
+      },);
+  }
+
+}
+

@@ -1,6 +1,11 @@
 import 'package:boodschappen/screens/boodschappen/boodschappenlijst.dart';
 import 'package:boodschappen/services/auth.dart';
+import 'package:boodschappen/services/ingredienten_data.dart';
 import 'package:flutter/material.dart';
+import 'package:boodschappen/screens/boodschappen/toevoegeningredienten.dart';
+import 'package:provider/provider.dart';
+import 'package:boodschappen/models/user.dart';
+
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -11,6 +16,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
+  
 
   int _selectedIndex = 0;
 
@@ -22,6 +28,16 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<CustomUser?>(context);
+
+    if(user == null){
+      return const Center(
+        child: Text('Geen gebruiker ingelogd'),
+      );
+    }
+
+    final db = IngredientenData(uid: user.uid!);
+
     return Scaffold(
       backgroundColor: Colors.green[50],
 
@@ -41,7 +57,32 @@ class _HomeState extends State<Home> {
               await _auth.signingOut();
             },
           )
-        ],
+        ],        
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: Colors.green[200]),
+              child: Center(
+                child: Text('Menu',
+                style: TextStyle(color: Colors.black, fontSize: 24),),
+              )),
+              ListTile(
+                leading: const Icon(Icons.add),
+                title: const Text('Nieuw Ingredient'),
+                onTap: () {
+                  showAddIngredientDialog(context, db);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.add),
+                title: const Text('Nieuwe Maaltijd'),
+                onTap: () {},
+              )
+          ],
+        ),
       ),
 
       body: IndexedStack(

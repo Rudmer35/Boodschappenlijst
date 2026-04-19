@@ -22,17 +22,5 @@ class DatabaseService {
     return userData.snapshots();
   }
 
-  Future addIngredient (String naam, String unit) async {
-    return await userData
-      .doc(uid)
-      .collection('ingredienten')
-      .add({
-        'naam': naam,
-        'eenheid': unit,
-        'aangemaaktOp': Timestamp.now(),      
-      });
-  }
-
   
-
-}
+  }
