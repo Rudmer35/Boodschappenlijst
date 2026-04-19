@@ -5,11 +5,15 @@ class BoodschappenData {
 
   BoodschappenData({required this.uid });
 
-  CollectionReference get boodschappenlijst => 
+ CollectionReference get boodschappenlijst => 
     FirebaseFirestore.instance
     .collection('Gebruikers')
     .doc(uid)
     .collection('boodschappen');
+
+  Stream<QuerySnapshot> getBoodschappen() {
+  return boodschappenlijst.snapshots();
+  }
 
   Future<void> addBoodschappen (String naam, int hoeveelheid, String eenheid, String maaltijd) async{
        await boodschappenlijst.add({

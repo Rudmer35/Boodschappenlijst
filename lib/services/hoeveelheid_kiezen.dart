@@ -14,7 +14,7 @@ static void hoeveelHeidPopup({
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
-    builder: (_) {
+    builder: (sheetContext) {
       return Padding(padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
         left: 16,

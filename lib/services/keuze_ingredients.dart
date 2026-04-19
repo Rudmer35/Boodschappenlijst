@@ -87,16 +87,16 @@ class KeuzeIngredients {
                     title: Text(ingredient['naam']),
                     subtitle: Text(ingredient['eenheid']),
                     onTap: () {
-                      Navigator.pop(context);
                       
                       KeuzeHoeveelheid.hoeveelHeidPopup(
                         context: context, 
                         ingredient: ingredient, onConfirm: (hoeveelheid){
+                          Navigator.pop(context);
                           boodschappenDB.addBoodschappen(
-                            ingredient['naam'],
-                            hoeveelheid,
-                            ingredient['eenheid'],
-                            ''
+                          ingredient['naam'],
+                          hoeveelheid,
+                          ingredient['eenheid'],
+                          ''
                             );
                           },
                         );
