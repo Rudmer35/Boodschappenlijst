@@ -1,6 +1,7 @@
 import 'package:boodschappen/models/user.dart';
 import 'package:boodschappen/screens/wrapper.dart';
 import 'package:boodschappen/services/auth.dart';
+import 'package:boodschappen/services/boodschappen_data.dart';
 import 'package:boodschappen/services/ingredienten_data.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,7 +28,13 @@ class MyApp extends StatelessWidget {
         update: (_, user, _){
         if (user == null) return null;
         return IngredientenData(uid: user.uid!);
-      })
+      }),
+      ProxyProvider<CustomUser?, BoodschappenData?>(
+        update: (_, user, _){
+          if (user == null) return null;
+          return BoodschappenData(uid: user.uid!);
+        })
+
       ],    
         child: MaterialApp(
           theme: ThemeData(

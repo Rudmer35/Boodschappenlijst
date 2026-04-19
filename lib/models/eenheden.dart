@@ -1,5 +1,5 @@
 class Eenheden {
-  static const Lijst = [
+  static const lijst = [
     "gram",
     "mL",
     "stuk"

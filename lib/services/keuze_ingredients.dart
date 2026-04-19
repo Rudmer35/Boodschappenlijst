@@ -1,6 +1,9 @@
+import 'package:boodschappen/services/boodschappen_data.dart';
+import 'package:boodschappen/services/hoeveelheid_kiezen.dart';
 import 'package:boodschappen/services/ingredienten_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 
 
 class KeuzeIngredients {
@@ -8,6 +11,7 @@ class KeuzeIngredients {
   static void show(
    {required BuildContext context,
     required IngredientenData db,
+    required BoodschappenData boodschappenDB,
     required Function(DocumentSnapshot ingredienten) onSelected,}
   ) {
     showModalBottomSheet(
@@ -84,7 +88,20 @@ class KeuzeIngredients {
                     subtitle: Text(ingredient['eenheid']),
                     onTap: () {
                       Navigator.pop(context);
-                      onSelected(ingredient);
+                      
+                      KeuzeHoeveelheid.hoeveelHeidPopup(
+                        context: context, 
+                        ingredient: ingredient, onConfirm: (hoeveelheid){
+                          boodschappenDB.addBoodschappen(
+                            ingredient['naam'],
+                            hoeveelheid,
+                            ingredient['eenheid'],
+                            ''
+                            );
+                          },
+                        );
+                      
+                      
                     },
                   ),
                   );

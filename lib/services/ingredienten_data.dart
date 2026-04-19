@@ -8,13 +8,13 @@ class IngredientenData {
   final CollectionReference users =
     FirebaseFirestore.instance.collection('Gebruikers');
 
-  Future addIngredient (String naam, String unit) async {
+  Future addIngredient (String naam, String eenheid) async {
     return await users
       .doc(uid)
       .collection('ingredienten')
       .add({
         'naam': naam,
-        'eenheid': unit,
+        'eenheid': eenheid,
         'aangemaaktOp': Timestamp.now(),      
       });
 }

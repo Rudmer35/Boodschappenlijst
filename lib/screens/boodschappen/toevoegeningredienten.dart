@@ -26,8 +26,8 @@ Future<void> showAddIngredientDialog(
                 const SizedBox(height: 10),
 
                 DropdownButtonFormField<String>(
-                  value: geselecteerdeEenheid,
-                  items: Eenheden.Lijst.map((value) {
+                  initialValue: geselecteerdeEenheid,
+                  items: Eenheden.lijst.map((value) {
                     return DropdownMenuItem(
                       value: value,
                       child: Text(value),

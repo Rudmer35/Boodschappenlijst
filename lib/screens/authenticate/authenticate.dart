@@ -2,14 +2,14 @@ import 'package:boodschappen/screens/authenticate/register.dart';
 import 'package:boodschappen/screens/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 
-class authenicate extends StatefulWidget {
-  const authenicate({super.key});
+class Authenicate extends StatefulWidget {
+  const Authenicate({super.key});
 
   @override
-  State<authenicate> createState() => _authenicateState();
+  State<Authenicate> createState() => _AuthenicateState();
 }
 
-class _authenicateState extends State<authenicate> {
+class _AuthenicateState extends State<Authenicate> {
 
   bool showSignIn = true;
   void toggleView() {
