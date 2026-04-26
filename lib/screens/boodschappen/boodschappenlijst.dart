@@ -54,12 +54,30 @@ class _BoodschappenlijstState extends State<Boodschappenlijst> {
 
                   final item = items[index];
 
-                  return ListTile(
-                    title: Text(item['naam']),
+                  return Card (
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6
+                    ),
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                    title: Text(item['naam'],
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    ),
                     subtitle: Text(
                       "${item['hoeveelheid']} ${item['eenheid']}"
                     ),
                     trailing: Text(item['maaltijd']),
+                  ),
                   );
                 },
               );
