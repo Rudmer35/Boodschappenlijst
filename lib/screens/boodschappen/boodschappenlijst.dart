@@ -1,10 +1,12 @@
 import 'package:boodschappen/services/add_tile.dart';
+import 'package:boodschappen/services/grouping.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:boodschappen/services/keuze_ingredients.dart';
 import 'package:provider/provider.dart';
 import 'package:boodschappen/services/ingredienten_data.dart';
 import 'package:boodschappen/services/boodschappen_data.dart';
+import 'package:boodschappen/models/boodschappen_items.dart';
 
 class Boodschappenlijst extends StatefulWidget {
   const Boodschappenlijst({super.key});
@@ -14,11 +16,13 @@ class Boodschappenlijst extends StatefulWidget {
 }
 
 class _BoodschappenlijstState extends State<Boodschappenlijst> {
+   final Grouping grouping = Grouping();
   @override
   Widget build(BuildContext context) {
-
+    
     final db = Provider.of<IngredientenData>(context);
     final boodschappenDb = Provider.of<BoodschappenData>(context);
+   
 
         return Column(
       children: [
@@ -40,46 +44,78 @@ class _BoodschappenlijstState extends State<Boodschappenlijst> {
                 );
               }
 
-              final items = snapshot.data!.docs;
+              final allItems = snapshot.data!.docs
+              .map((doc) => Boodschap.fromDoc(doc))
+              .toList();
 
-              if (items.isEmpty) {
+              final grouped = grouping.group(allItems);
+              
+              if (grouped.isEmpty) {
                 return const Center(
                   child: Text('Geen boodschappen'),
                 );
               }
+              return ListView(
+                children: grouped.entries.map((entry){
+                  final naam = entry.key;
+                  final groupItems = entry.value;
 
-              return ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (context, index) {
+                  final total = groupItems.fold<int>(0,
+                (sum, item)=> sum + item.hoeveelheid,
+                );
 
-                  final item = items[index];
-
-                  return Card (
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6
-                    ),
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                    title: Text(item['naam'],
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                    ),
-                    subtitle: Text(
-                      "${item['hoeveelheid']} ${item['eenheid']}"
-                    ),
-                    trailing: Text(item['maaltijd']),
-                  ),
-                  );
+                 return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: ExpansionTile(
+        title: Text(
+          naam,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text("Totaal: $total"),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.delete_forever, color: Colors.red),
+              onPressed: () {
+                boodschappenDb.deleteGroup(naam);
                 },
+              ),
+              const Icon(Icons.expand_more)
+          ],
+        ),
+
+        children: groupItems.map((item) {
+          return ListTile(
+            title: Text(item.maaltijd.isEmpty
+                ? item.naam
+                : item.maaltijd),
+
+            subtitle: Text(item.eenheid),
+
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("${item.hoeveelheid}"),
+                const SizedBox(width: 8),
+                IconButton(
+                  icon: Icon(Icons.close, color: Colors.red),
+                  onPressed: () {
+                    boodschappenDb.deleteBoodschap(item.id);
+                  },
+                  ),
+                  
+              ],
+            ),
+            );
+           }).toList(),
+            ),
+          );
+            }).toList(),
               );
             },
           ),

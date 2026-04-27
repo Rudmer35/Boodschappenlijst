@@ -23,7 +23,6 @@ class IngredientenData {
   return users
       .doc(uid)
       .collection('ingredienten')
-      .orderBy('naam') // 👈 sort alphabetically
       .snapshots();
 }
 }
