@@ -1,4 +1,5 @@
 import 'package:boodschappen/screens/boodschappen/boodschappenlijst.dart';
+import 'package:boodschappen/screens/maaltijden/week_planning.dart';
 import 'package:boodschappen/services/auth.dart';
 import 'package:boodschappen/services/ingredienten_data.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _HomeState extends State<Home> {
 
   final List<Widget> _pages = [
     Boodschappenlijst(),
-    Center(child: Text("Items Page")),
+    WeekPlanning(),
     Center(child: Text("Settings Page")),
   ];
 
